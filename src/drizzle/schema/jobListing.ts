@@ -81,6 +81,6 @@ export const jobListingReferences = relations(
             fields: [JobListingTable.organizationId],
             references: [OrganizationTable.id],
         }),
-        applications: many(JobListingApplicationTable)
+        applications: many(JobListingApplicationTable),
     })
 );

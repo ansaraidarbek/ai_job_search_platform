@@ -1,3 +1,59 @@
+import { LogInIcon } from "lucide-react";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+    SidebarTrigger,
+} from "../components/ui/sidebar";
+import { AppSidebarClient } from "./_AppSidebarClients";
+import Link from "next/link";
+import { SignedIn, SignedOut } from "../services/clerk/components/SignInStatus";
+import { SidebarUserButton } from "../features/users/components/SidebarUserButton";
+
 export default function HomePage() {
-    return <h1>Welcome to the Home Page</h1>;
+    return (
+        <SidebarProvider className="overflow-y-hidden">
+            <AppSidebarClient>
+                <Sidebar collapsible="icon" className="overflow-hidden">
+                    <SidebarHeader className="flex-row">
+                        <SidebarTrigger />
+                        <span className="text-xl text-nowrap">
+                            My Application
+                        </span>
+                    </SidebarHeader>
+                    <SidebarContent>
+                        <SidebarGroup>
+                            <SidebarMenu>
+                                <SignedOut>
+                                    <SidebarMenuItem>
+                                        <SidebarMenuButton asChild={true}>
+                                            <Link href="/sign-in">
+                                                <LogInIcon />
+                                                <span> Log In</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                </SignedOut>
+                            </SidebarMenu>
+                        </SidebarGroup>
+                    </SidebarContent>
+                    <SignedIn>
+                        <SidebarFooter>
+                            <SidebarMenu>
+                                <SidebarMenuItem>
+                                    <SidebarUserButton />
+                                </SidebarMenuItem>
+                            </SidebarMenu>
+                        </SidebarFooter>
+                    </SignedIn>
+                </Sidebar>
+            </AppSidebarClient>
+        </SidebarProvider>
+    );
 }
